@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+   "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+   "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+<constant name="struts.devMode" value="true" />
+   <package name="default" namespace="/" extends="struts-default">
+  	<interceptors>
+		<interceptor name="authenticateInterceptor"	class="org.iiitb.sis.util.AuthenticateInterceptor"></interceptor>
+			<interceptor-stack name="secureAccess">
+				<interceptor-ref name="authenticateInterceptor" />
+				<!-- <interceptor-ref name="createSession" /> -->
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+	    <action name="login" class="org.iiitb.sis.login.LoginAction" method ="execute">
+	           <result name="admin">/jsp/admin/welcomeadmin.jsp</result>
+	           <result name="student">/jsp/studenthome/welcomestudent.jsp</result> 
+	           <result name="faculty">/jsp/facultyhome/welcomefaculty.jsp</result>
+	           <result name="error">/welcome.jsp</result>
+	      </action>
+	      <action name="getuserimage" class="org.iiitb.sis.login.LoginAction" method ="getUserImage" />
+	      <action name="getnews" class="org.iiitb.sis.login.LoginAction" method ="getNewsDetails">
+	      		<result name="success">/jsp/shownews.jsp</result>
+	      		<result name="error">/jsp/error.jsp</result>
+	      </action>
+	      <action name="getmyprofile" class="org.iiitb.sis.login.LoginAction" method ="getMyProfile">
+	      		<result name="success">/jsp/viewmyprofile.jsp</result>
+	      		<result name="error">/jsp/error.jsp</result>
+	      </action>
+	      <action name="logout" class="org.iiitb.sis.login.LogoutAction">
+	      		<result name="success">/welcome.jsp</result>
+	      </action>
+	   	  <action name="resetpassword" class="org.iiitb.sis.login.LoginAction" method ="resetPassword" >
+	   	  		<result name="success">/jsp/descriptionpage.jsp</result>
+	   	  </action>
+	   	  <action name="getimage" class="org.iiitb.sis.login.LoginAction" method ="getImage" />
+     </package>
+     <package name="student" namespace="/" extends="struts-default">
+	   	  <action name="getsearchfriends" class="org.iiitb.sis.studenthome.action.SearchFriends" method ="getFriends" >
+	   	  		<result name="success">/jsp/studenthome/friendstable.jsp</result>
+	   	  		<result name="error">/jsp/error.jsp</result>
+	   	  </action>
+	   	  <action name="getfriendprofile" class="org.iiitb.sis.studenthome.action.GetFriendProfile" method ="getFriendProfile" >
+	   	  		<result name="success">/jsp/studenthome/viewmyfriendprofile.jsp</result>
+	   	  		<result name="error">/jsp/error.jsp</result>
+	   	  </action>
+	   	  <action name="getsearchcourses" class="org.iiitb.sis.studenthome.action.SearchCourses" method ="getCourses" >
+	   	  		<result name="success">/jsp/studenthome/coursestable.jsp</result>
+	   	  		<result name="error">/jsp/error.jsp</result>
+	   	  </action>
+	   	  <action name="getcoursedetails" class="org.iiitb.sis.studenthome.action.GetCourseDetails" method ="getCourseDetails" >
+	   	  		<result name="success">/jsp/studenthome/viewcoursedetails.jsp</result>
+	   	  		<result name="error">/jsp/error.jsp</result>
+	   	  </action>
+     </package>
+</struts>
