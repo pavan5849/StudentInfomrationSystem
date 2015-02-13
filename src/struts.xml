@@ -19,7 +19,6 @@
 	           <result name="faculty">/jsp/facultyhome/welcomefaculty.jsp</result>
 	           <result name="error">/welcome.jsp</result>
 	      </action>
-	      <action name="getuserimage" class="org.iiitb.sis.login.LoginAction" method ="getUserImage" />
 	      <action name="getnews" class="org.iiitb.sis.login.LoginAction" method ="getNewsDetails">
 	      		<result name="success">/jsp/shownews.jsp</result>
 	      		<result name="error">/jsp/error.jsp</result>
@@ -32,7 +31,8 @@
 	      		<result name="success">/welcome.jsp</result>
 	      </action>
 	   	  <action name="resetpassword" class="org.iiitb.sis.login.LoginAction" method ="resetPassword" >
-	   	  		<result name="success">/jsp/descriptionpage.jsp</result>
+	   	  		<result name="success">/jsp/resetpassword.jsp</result>
+	   	  		<result name="error">/jsp/error.jsp</result>
 	   	  </action>
 	   	  <action name="getimage" class="org.iiitb.sis.login.LoginAction" method ="getImage" />
      </package>
@@ -51,6 +51,14 @@
 	   	  </action>
 	   	  <action name="getcoursedetails" class="org.iiitb.sis.studenthome.action.GetCourseDetails" method ="getCourseDetails" >
 	   	  		<result name="success">/jsp/studenthome/viewcoursedetails.jsp</result>
+	   	  		<result name="error">/jsp/error.jsp</result>
+	   	  </action>
+	   	  <action name="getmygrades" class="org.iiitb.sis.studenthome.action.GetGrades" method ="getGrades" >
+	   	  		<result name="success">/jsp/studenthome/viewmygrades.jsp</result>
+	   	  		<result name="error">/jsp/error.jsp</result>
+	   	  </action>
+	   	  <action name="getregisteredcourses" class="org.iiitb.sis.studenthome.action.GetRegisteredCourses" method ="getRegisteredCourses" >
+	   	  		<result name="success">/jsp/studenthome/getregisteredcourses.jsp</result>
 	   	  		<result name="error">/jsp/error.jsp</result>
 	   	  </action>
      </package>

@@ -293,3 +293,4 @@ INSERT INTO `sisdb2015`.`grade_master` (`gid`, `grade_gname`, `weightage`, `pass
 INSERT INTO `sisdb2015`.`grade_master` (`gid`, `grade_gname`, `weightage`, `passorfail`) VALUES ('11', 'F+', '0.7', 'F');
 INSERT INTO `sisdb2015`.`grade_master` (`gid`, `grade_gname`, `weightage`, `passorfail`) VALUES ('12', 'F', '0.4', 'F');
 INSERT INTO `sisdb2015`.`grade_master` (`gid`, `grade_gname`, `weightage`, `passorfail`) VALUES ('13', 'F-', '0.0', 'F');
+INSERT INTO `sisdb2015`.`grade_master` (`gid`, `gname`, `weightage`, `passorfail`) VALUES ('14', 'NA', '0.0', '-');

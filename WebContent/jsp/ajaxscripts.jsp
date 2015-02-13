@@ -40,30 +40,32 @@ function loaddescriptionpage()
 }
 function resetpwd()
 {
-	var xmlhttp;
-	if (window.XMLHttpRequest)
-		 xmlhttp=new XMLHttpRequest();
-	else
-	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
-
+	console.log("entered");
 	if(document.resetpassword.confirm_password.value == document.resetpassword.new_password.value)
 	{
+		var xmlhttp;
+		if (window.XMLHttpRequest)
+			 xmlhttp=new XMLHttpRequest();
+		else
+		  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
 		xmlhttp.onreadystatechange=function()
 		  {
 		  if (xmlhttp.readyState==4 && xmlhttp.status==200)
 		     document.getElementById("maincenter").innerHTML=xmlhttp.responseText;
 		  };
-		xmlhttp.open("POST","./resetpassword",true);
+		xmlhttp.open("POST","./resetpassword?cp="+document.resetpassword.current_password.value+"&np="+document.resetpassword.new_password.value,true);
 		xmlhttp.send();
 		//window.alert("Password Updated Successfully");
 	}
 	else
 	{
 		window.alert("Password does not match");
+		document.resetpassword.current_password.value="";
 		document.resetpassword.new_password.value="";
 		document.resetpassword.confirm_password.value="";
-		document.resetpassword.new_password.focus();
+		document.resetpassword.current_password.focus();
 	}
+	return false;
 }
 function searchfriend()
 {
@@ -143,6 +145,32 @@ function loadcoursedetail()
 }
 function viewmygrades()
 {
-	$('#maincenter').load('./jsp/studenthome/viewmygrades.jsp');
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  xmlhttp=new XMLHttpRequest();
+	else
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		    document.getElementById("maincenter").innerHTML=xmlhttp.responseText;
+	  };
+	xmlhttp.open("GET","./getmygrades",true);
+	xmlhttp.send();
+}
+function getregisteredcourses()
+{
+	var xmlhttp;
+	if (window.XMLHttpRequest)
+	  xmlhttp=new XMLHttpRequest();
+	else
+	  xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+	xmlhttp.onreadystatechange=function()
+	  {
+	  if (xmlhttp.readyState==4 && xmlhttp.status==200)
+		    document.getElementById("maincenter").innerHTML=xmlhttp.responseText;
+	  };
+	xmlhttp.open("GET","./getregisteredcourses",true);
+	xmlhttp.send();
 }
 </script>

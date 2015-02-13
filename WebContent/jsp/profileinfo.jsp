@@ -10,7 +10,7 @@
         		<div class="row-fluid">
         			<div class="col-lg-1" align="left">
         				<!-- <img style="padding-top:5px;" src=./images/pavan.jpg height="70px" width="70px"> -->
-        				 <img style="padding-top:5px;" src="./getuserimage" height="70px" width="70px" />
+        				 <img style="padding-top:5px;" src="./getimage" height="70px" width="70px" />
         			</div>
         			<div class="col-lg-3"></div>
 			        <div class="col-lg-3">

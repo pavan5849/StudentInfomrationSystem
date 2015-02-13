@@ -24,36 +24,27 @@ public class LoginAction extends ActionSupport implements SessionAware
 	Connection con;
 	private String uname;
 	private int userid;
-	private String upwd;
+	private String upwd,np,cp;
 	private Map<String, Object> session;
 	private int nid;
 	private int sid;
-	private String current_password;
-	private String confirm_password;
-	private String new_password;
+	public String getNp() {
+		return np;
+	}
+	public void setNp(String np) {
+		this.np = np;
+	}
+	public String getCp() {
+		return cp;
+	}
+	public void setCp(String cp) {
+		this.cp = cp;
+	}
 	public int getSid() {
 		return sid;
 	}
 	public void setSid(int sid) {
 		this.sid = sid;
-	}
-	public String getConfirm_password() {
-		return confirm_password;
-	}
-	public void setConfirm_password(String confirm_password) {
-		this.confirm_password = confirm_password;
-	}
-	public String getCurrent_password() {
-		return current_password;
-	}
-	public void setCurrent_password(String current_password) {
-		this.current_password = current_password;
-	}
-	public String getNew_password() {
-		return new_password;
-	}
-	public void setNew_password(String new_password) {
-		this.new_password = new_password;
 	}
 	public int getUserid() {
 		return userid;
@@ -163,7 +154,7 @@ public class LoginAction extends ActionSupport implements SessionAware
 			e.printStackTrace();
 		}
 	}	
-	public String getUserImage()
+	/*public String getUserImage()
 	{
 		PreparedStatement pstmt;
 		try
@@ -194,7 +185,7 @@ public class LoginAction extends ActionSupport implements SessionAware
 		    ConnectionPool.freeConnection(con);
 		    return NONE;
 		}
-	}
+	}*/
 	public String getNewsDetails()
 	{
 		PreparedStatement pstmt;
@@ -289,24 +280,50 @@ public class LoginAction extends ActionSupport implements SessionAware
 	}
 	public String resetPassword()
 	{
-		System.out.println("hi");
-		return "success";
+		PreparedStatement pstmt;
+		try
+		{
+			con=ConnectionPool.getConnection();
+			pstmt = con.prepareStatement(Constants.CHANGE_PASSWORD);
+			pstmt.setString(1, np);
+		    pstmt.setInt(2,Integer.parseInt(ServletActionContext.getRequest().getSession().getAttribute("userid").toString()));
+		    pstmt.setString(3, cp);
+		    int rs = pstmt.executeUpdate();
+		    if(rs!=0)
+		    {
+		    	ServletActionContext.getResponse().addHeader("msg", "Password Updated Successfully");
+			    return "success";		    	
+		    }
+		    else
+		    {
+		    	ServletActionContext.getResponse().addHeader("msg", "Incorrect Current Password");
+			    ConnectionPool.freeConnection(con);
+			    return "success";
+		    }
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		    ConnectionPool.freeConnection(con);
+		    return "error";
+		}
 	}
 	public String getImage()
 	{
+		int sid=0;
 		OutputStream out;
 		try 
 		{
 			con=ConnectionPool.getConnection();
-			PreparedStatement pstmt = con.prepareStatement("select userimage from user where userid=? && userimage is not null");
+			PreparedStatement pstmt = con.prepareStatement(Constants.GET_USER_IMAGE);
+			sid=Integer.parseInt(ServletActionContext.getRequest().getSession().getAttribute("userid").toString());
 			pstmt.setInt(1, sid);
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next())
-			{
-				HttpServletResponse res=ServletActionContext.getResponse();
-				res.setContentType("image/jpg");
+			{				
+				ServletActionContext.getResponse().setContentType("image/jpeg");
 				InputStream in=rs.getBinaryStream(1);
-				out=res.getOutputStream();
+				out=ServletActionContext.getResponse().getOutputStream();
 				byte[] buffer=new byte[1024];
 				int len;
 				while((len=in.read(buffer))!=-1)
@@ -316,7 +333,8 @@ public class LoginAction extends ActionSupport implements SessionAware
 			}
 			else
 			{
-				System.out.println("No Image Found");
+				ServletActionContext.getResponse().setContentType("image/jpeg");
+				//System.out.println("No Image Found");
 			}
 		} 
 		catch (Exception e) 
